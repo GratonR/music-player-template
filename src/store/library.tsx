@@ -1,8 +1,18 @@
+import prometheus from '@/assets/audio/prometheus.mp3'
 import library from '@/assets/data/library.json'
 import { unknownTrackImageUri } from '@/constants/images'
 import { Artist, Playlist, TrackWithPlaylist } from '@/helpers/types'
 import { Track } from 'react-native-track-player'
 import { create } from 'zustand'
+
+const localTracks: TrackWithPlaylist[] = [
+	{
+		url: prometheus,
+		title: 'Prometheus',
+		artist: 'Claude',
+		playlist: ['Instrumental 🎵'],
+	},
+]
 
 interface LibraryState {
 	tracks: TrackWithPlaylist[]
@@ -11,7 +21,7 @@ interface LibraryState {
 }
 
 export const useLibraryStore = create<LibraryState>()((set) => ({
-	tracks: library,
+	tracks: [...localTracks, ...library],
 	toggleTrackFavorite: (track) =>
 		set((state) => ({
 			tracks: state.tracks.map((currentTrack) => {
